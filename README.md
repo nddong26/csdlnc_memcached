@@ -23,19 +23,25 @@ Cấu hình các thông tin sau trong file src/resource/config.properties
 - MEMCACHED_PORT: Port của memcached
 - MEMCACHED_MAX_CONNECTION: Số lượng connection tối đa
 - DATA_FILE_FOLDER: Đường dẫn tới thư mục chứa data test
+
 Chạy URL sau khi chạy lên trình duyệt: http://host:port/example/json/importMemcached
 (Với host:port là đường dẫn của ứng dụng được triển khai)
+
 Chờ tới khi dữ liệu được import vào hết memcached
 
 **4. Chạy test thử nghiệm**
 
-- Test lấy dữ liệu theo Id/Key trong bảng order_detail (80.000.000) bản ghi:
-http://host:port/example/json/memcached/getOrderDetailById
-http://host:port/example/json/mysql/getOrderDetailById
+Test lấy dữ liệu theo Id/Key trong bảng order_detail (80.000.000) bản ghi:
 
-- Test lấy dữ liệu join từ 2 bảng orders và order_detail
-http://host:port/example/json/memcached/getOrderPrice
-http://host:port/example/json/mysql/getOrderPrice
+- http://host:port/example/json/memcached/getOrderDetailById
+
+- http://host:port/example/json/mysql/getOrderDetailById
+
+Test lấy dữ liệu join từ 2 bảng orders và order_detail
+
+- http://host:port/example/json/memcached/getOrderPrice
+
+- http://host:port/example/json/mysql/getOrderPrice
 
 
 
