@@ -1,3 +1,23 @@
+**0. Cài đặt**
+Môi trường:
+ - Centos 7 64bit
+ - CPU: 8 core
+ - RAM: 52GB
+Cài đặt Memcached theo hướng dẫn https://github.com/memcached/memcached/wiki/Install
+
+yum install memcached
+systemctl enable memcached
+systemctl start memcached
+
+Cấu hình dung lượng tối đa lưu trữ trên memcached: vim /etc/sysconfig/memcached  , Thay đổi tham số CACHESIZE="50000" (50GB)
+
+Cài đặt MySQL: 
+wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+rpm -ivh mysql-community-release-el7-5.noarch.rpm
+yum install mysql-server
+systemctl enable mysqld
+systemctl start mysqld
+ 
 **1. Hướng dẫn chạy sinh bộ dữ liệu test:**
 
 Sử dụng class: com.memcached.generate.GenerateDataTest, chạy hàm main sẽ sinh ra được bộ dữ liệu test bao gồm:
