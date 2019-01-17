@@ -16,6 +16,8 @@ LOAD DATA LOCAL INFILE '/home/csdl/order.txt' INTO TABLE orders;
 LOAD DATA LOCAL INFILE '/home/csdl/order_detail.txt' INTO TABLE order_detail;
 (Chú ý thay đường dẫn tới file dữ liệu test)
 
+Dữ liệu được import vào mất khoảng 10 phút 
+
 **3. Import vào Memcached**
 
 Cấu hình các thông tin sau trong file src/resource/config.properties
@@ -27,7 +29,7 @@ Cấu hình các thông tin sau trong file src/resource/config.properties
 Chạy URL sau khi chạy lên trình duyệt: http://host:port/example/json/importMemcached
 (Với host:port là đường dẫn của ứng dụng được triển khai)
 
-Chờ tới khi dữ liệu được import vào hết memcached
+Chờ tới khi dữ liệu được import vào hết memcached (~19 phút)
 
 **4. Chạy test thử nghiệm**
 
