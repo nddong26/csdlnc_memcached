@@ -36,55 +36,55 @@ public class ImportData {
     public Response importMemcached() throws FileNotFoundException, InterruptedException, ParseException {
         long beginTime = System.currentTimeMillis();
         System.out.println("import product");
-        long fromTime = System.currentTimeMillis();
-        Scanner scanner = new Scanner(new File(rb.getString("DATA_FILE_FOLDER") + "/product.txt"));
-        while (scanner.hasNext()) {
-            String[] line = scanner.nextLine().split("\t");
-            ImportFromFile2Memcached.queue.add(new Product(line));
-        }
-        createThreadImport();
-
-        System.out.println("process_import_product_time: " + (System.currentTimeMillis() - fromTime));
-
-        System.out.println("import customer");
-        fromTime = System.currentTimeMillis();
-        Scanner customer = new Scanner(new File(rb.getString("DATA_FILE_FOLDER") + "/customer.txt"));
-        while (customer.hasNext()) {
-            String[] line = customer.nextLine().split("\t");
-            ImportFromFile2Memcached.queue.add(new Customer(line));
-        }
-        createThreadImport();
-
-        System.out.println("process_import_customer_time: " + (System.currentTimeMillis() - fromTime));
-
-        System.out.println("import order");
-        fromTime = System.currentTimeMillis();
-        Scanner orders = new Scanner(new File(rb.getString("DATA_FILE_FOLDER") + "/order_with_detail.txt"));
-        while (orders.hasNext()) {
-            String[] line = orders.nextLine().split("\t");
-            ImportFromFile2Memcached.queue.add(new Orders(line));
-            if (ImportFromFile2Memcached.queue.size() > 100000) {
-                createThreadImport();
-            }
-        }
-        createThreadImport();
-
-        System.out.println("process_import_order_time: " + (System.currentTimeMillis() - fromTime));
-
-
-        System.out.println("import order_detail");
-        fromTime = System.currentTimeMillis();
-        Scanner orderDetail = new Scanner(new File(rb.getString("DATA_FILE_FOLDER") + "/order_detail.txt"));
-        while (orderDetail.hasNext()) {
-            String[] line = orderDetail.nextLine().split("\t");
-            ImportFromFile2Memcached.queue.add(new OrderDetail(line));
-            if (ImportFromFile2Memcached.queue.size() > 100000) {
-                createThreadImport();
-            }
-        }
-        createThreadImport();
-
-        System.out.println("process_import_order_detail_time: " + (System.currentTimeMillis() - fromTime));
+//        long fromTime = System.currentTimeMillis();
+//        Scanner scanner = new Scanner(new File(rb.getString("DATA_FILE_FOLDER") + "/product.txt"));
+//        while (scanner.hasNext()) {
+//            String[] line = scanner.nextLine().split("\t");
+//            ImportFromFile2Memcached.queue.add(new Product(line));
+//        }
+//        createThreadImport();
+//
+//        System.out.println("process_import_product_time: " + (System.currentTimeMillis() - fromTime));
+//
+//        System.out.println("import customer");
+//        fromTime = System.currentTimeMillis();
+//        Scanner customer = new Scanner(new File(rb.getString("DATA_FILE_FOLDER") + "/customer.txt"));
+//        while (customer.hasNext()) {
+//            String[] line = customer.nextLine().split("\t");
+//            ImportFromFile2Memcached.queue.add(new Customer(line));
+//        }
+//        createThreadImport();
+//
+//        System.out.println("process_import_customer_time: " + (System.currentTimeMillis() - fromTime));
+//
+//        System.out.println("import order");
+//        fromTime = System.currentTimeMillis();
+//        Scanner orders = new Scanner(new File(rb.getString("DATA_FILE_FOLDER") + "/order_with_detail.txt"));
+//        while (orders.hasNext()) {
+//            String[] line = orders.nextLine().split("\t");
+//            ImportFromFile2Memcached.queue.add(new Orders(line));
+//            if (ImportFromFile2Memcached.queue.size() > 100000) {
+//                createThreadImport();
+//            }
+//        }
+//        createThreadImport();
+//
+//        System.out.println("process_import_order_time: " + (System.currentTimeMillis() - fromTime));
+//
+//
+//        System.out.println("import order_detail");
+//        fromTime = System.currentTimeMillis();
+//        Scanner orderDetail = new Scanner(new File(rb.getString("DATA_FILE_FOLDER") + "/order_detail.txt"));
+//        while (orderDetail.hasNext()) {
+//            String[] line = orderDetail.nextLine().split("\t");
+//            ImportFromFile2Memcached.queue.add(new OrderDetail(line));
+//            if (ImportFromFile2Memcached.queue.size() > 100000) {
+//                createThreadImport();
+//            }
+//        }
+//        createThreadImport();
+//
+//        System.out.println("process_import_order_detail_time: " + (System.currentTimeMillis() - fromTime));
 
 
         long endTime = System.currentTimeMillis();
@@ -133,7 +133,7 @@ public class ImportData {
     @Produces("application/json")
     public Response getCustomerByIdMemcached() throws FileNotFoundException, InterruptedException, ParseException, SQLException {
 
-        int numberOfQuery = 10;
+        int numberOfQuery = Integer.parseInt(rb.getString("NUMBER_OF_QUERY"));
         long beginTime = System.currentTimeMillis();
         for (int i = 0; i < numberOfQuery; i++) {
             int customerId = Generator.getRandomNumberBellow(1000000);
@@ -153,7 +153,7 @@ public class ImportData {
     @Produces("application/json")
     public Response getOrderTotalPriceMemcached() throws FileNotFoundException, InterruptedException, ParseException, SQLException {
 
-        int numberOfQuery = 10;
+        int numberOfQuery = Integer.parseInt(rb.getString("NUMBER_OF_QUERY"));
         long beginTime = System.currentTimeMillis();
         for (int i = 0; i < numberOfQuery; i++) {
             int orderId = Generator.getRandomNumberBellow(20000000);
@@ -183,7 +183,7 @@ public class ImportData {
     public Response getOrderTotalPriceMySQL() throws FileNotFoundException, InterruptedException, ParseException, SQLException {
 
         Connection connection = MySQLConnection.getConnection();
-        int numberOfQuery = 10;
+        int numberOfQuery = Integer.parseInt(rb.getString("NUMBER_OF_QUERY"));
         long beginTime = System.currentTimeMillis();
         for (int i = 0; i < numberOfQuery; i++) {
             int orderId = Generator.getRandomNumberBellow(20000000);
@@ -253,7 +253,7 @@ public class ImportData {
     @Produces("application/json")
     public Response getOrderDetailByIdMemcached() throws FileNotFoundException, InterruptedException, ParseException, SQLException {
 
-        int numberOfQuery = 10;
+        int numberOfQuery = Integer.parseInt(rb.getString("NUMBER_OF_QUERY"));
         long beginTime = System.currentTimeMillis();
         for (int i = 0; i < numberOfQuery; i++) {
             int orderDetailId = Generator.getRandomNumberBellow(80000000);
@@ -273,7 +273,7 @@ public class ImportData {
     public Response getOrderDetailById() throws FileNotFoundException, InterruptedException, ParseException, SQLException {
 
         Connection connection = MySQLConnection.getConnection();
-        int numberOfQuery = 10;
+        int numberOfQuery = Integer.parseInt(rb.getString("NUMBER_OF_QUERY"));
         long beginTime = System.currentTimeMillis();
         for (int i = 0; i < numberOfQuery; i++) {
             int orderDetailId = Generator.getRandomNumberBellow(80000000);
