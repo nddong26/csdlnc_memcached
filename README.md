@@ -1,3 +1,31 @@
+**0. Cài đặt**
+Môi trường:
+ - Centos 7 64bit
+ - CPU: 8 core
+ - RAM: 52GB
+
+Cài đặt Memcached theo hướng dẫn https://github.com/memcached/memcached/wiki/Install
+
+yum install memcached
+
+systemctl enable memcached
+
+systemctl start memcached
+
+Cấu hình dung lượng tối đa lưu trữ trên memcached: vim /etc/sysconfig/memcached  , Thay đổi tham số CACHESIZE="50000" (50GB)
+
+Cài đặt MySQL: 
+wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+
+rpm -ivh mysql-community-release-el7-5.noarch.rpm
+
+yum install mysql-server
+
+systemctl enable mysqld
+
+systemctl start mysqld
+
+ 
 **1. Hướng dẫn chạy sinh bộ dữ liệu test:**
 
 Sử dụng class: com.memcached.generate.GenerateDataTest, chạy hàm main sẽ sinh ra được bộ dữ liệu test bao gồm:
@@ -16,6 +44,8 @@ LOAD DATA LOCAL INFILE '/home/csdl/order.txt' INTO TABLE orders;
 LOAD DATA LOCAL INFILE '/home/csdl/order_detail.txt' INTO TABLE order_detail;
 (Chú ý thay đường dẫn tới file dữ liệu test)
 
+Dữ liệu được import vào mất khoảng 10 phút 
+
 **3. Import vào Memcached**
 
 Cấu hình các thông tin sau trong file src/resource/config.properties
@@ -27,7 +57,7 @@ Cấu hình các thông tin sau trong file src/resource/config.properties
 Chạy URL sau khi chạy lên trình duyệt: http://host:port/example/json/importMemcached
 (Với host:port là đường dẫn của ứng dụng được triển khai)
 
-Chờ tới khi dữ liệu được import vào hết memcached
+Chờ tới khi dữ liệu được import vào hết memcached (~19 phút)
 
 **4. Chạy test thử nghiệm**
 
