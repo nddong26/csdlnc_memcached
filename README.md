@@ -46,6 +46,9 @@ LOAD DATA LOCAL INFILE '/home/csdl/order_detail.txt' INTO TABLE order_detail;
 
 Dữ liệu được import vào mất khoảng 10 phút 
 
+Nếu test với bảng MySQL Inmemory tham khảo cách tạo bảng trong file src/resources/mysql_DDL_In_memory.sql
+Cấu trúc bảng tương tự như trên và thời gian import  vào khoảng 8phút 30giay
+
 **3. Import vào Memcached**
 
 Cấu hình các thông tin sau trong file src/resource/config.properties
